@@ -8,9 +8,10 @@
 # ]
 from django.urls import path,include
 from django.conf.urls import url
-from orders.views import create_order,view_order
+from orders.views import create_order,view_order,view_order_v2
 
 urlpatterns = [
     path('create/',create_order),
-    path('view/',view_order)
+    path('view/',view_order),
+    path('view_v2/',view_order_v2)
 ]
