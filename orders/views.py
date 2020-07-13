@@ -9,6 +9,8 @@ from django_filters import FilterSet
 from orders.models import Order,OrderItem
 from products.models import Product
 from rest_framework.renderers import JSONRenderer
+from django.db import connection
+
 
 # Create your views here.
 
@@ -69,4 +71,32 @@ def view_order(request):
     serialized_obj = serializers.serialize('python', queryset)
 
     return Response(data=serialized_obj,status=HTTP_200_OK)
+
+@api_view(["GET"])
+def view_order_v2(request):
+    print(request.user.id)
+    order_details="""
+                    SELECT "orders_order"."id", "orders_order"."firstname",
+                     "orders_order"."lastname", 
+                     "orders_order"."email", 
+                     "orders_order"."address",
+                      "orders_order"."city", 
+                      "orders_order"."postal_code", 
+                      "orders_order"."created_at", 
+                      "orders_order"."updated_at", 
+                      "orders_order"."paid", 
+                      "orders_order"."user_id" ,
+                      "orders_orderitem"."product_id"
+                      FROM "orders_order"
+                      LEFT JOIN "orders_orderitem" on(orders_orderitem.order_id="orders_order"."id")
+                       WHERE "orders_order"."user_id" = %s
+                      ORDER BY "orders_order"."created_at" DESC
+                    """
+    with connection.cursor() as mycursor:
+        # order  query
+        mycursor.execute(order_details,[str(request.user.id)])
+        order_detail_data = [dict(zip([column[0] for column in mycursor.description], row))
+                       for row in mycursor.fetchall()]
+
+    return Response(data=order_detail_data,status=HTTP_200_OK)
    
