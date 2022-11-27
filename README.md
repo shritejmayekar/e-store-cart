@@ -1,19 +1,21 @@
 # e-store-cart
 
 
-# Backend And Django Admin panel as an CMS for the E-commerce Apparel Site
+## Backend And Django Admin panel as an CMS for the E-commerce Apparel Site
 
-# URL Product As REST https://my-store-ecommerce.herokuapp.com/product/
-# URL Admin https://my-store-ecommerce.herokuapp.com/admin
+#### URL Product As REST https://my-store-ecommerce.herokuapp.com/product/
+#### URL Admin https://my-store-ecommerce.herokuapp.com/admin
 
 # Steps for running
 
-# make virtual env
+` make virtual env`
 
-# activate virtual env
+`activate virtual env`
 
-# pip install requirement.txt
+`pip install requirement.txt`
 
-# add .env changes
+#### add .env changes
+source .env
 
-# RUN using python manage.py runserver
+##### RUN using 
+`python manage.py runserver`
